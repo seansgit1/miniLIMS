@@ -1,0 +1,33 @@
+{% extends 'Samples/base.html' %}
+
+
+{%  block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        {% if samples %}
+            <h1>{{ samples.count }} Current sample{{ samples.count|pluralize }}</h1>
+        {% else %}
+            <h1>Current samples</h1>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        {% if samples %}
+            <div class="list-group">
+                {% for sample in samples %}
+                    <a href="{% url 'viewsample' sample.id %}" class="list-group-item list-group-item-action{% if sample.Priority %} list-group-item-danger{% endif %}">
+                    <b>{{ sample.id }} - {{ sample.Status }} - {{ sample.Identifier }} - {{ sample.SampleDt }} </b></a>
+                {% endfor %}
+            </div>   
+        {% else %}
+            <div class="text-center">
+                <h2>Looks like you don't have any samples! </h2>
+            <br>
+            <a role="button" class="btn btn-primary" href="{% url 'home' %}">New Sample</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

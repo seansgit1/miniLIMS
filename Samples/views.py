@@ -89,14 +89,14 @@ def getresults(request,sample_pk):
     return render(request,'Samples/results.html',{'results':results})
 
 def enterresult(request,result_pk):
-    result = get_object_or_404(SampleResult,pk=result_pk)#SampleResult.objects.filter(id=result_pk)
-    #form =SampleForm(request.POST)
-    #if form.is_valid():
-    textval = 'here' 
-    result.Value = '14'#request.POST['value']
-    result.save()
-    results = SampleResult.objects.filter(Sample=result.Sample)
-    return render(request,'Samples/results.html',{'results':results,'textval':textval})
+    if request.method=='POST':
+        result = get_object_or_404(SampleResult,pk=result_pk)#SampleResult.objects.filter(id=result_pk)
+        result.Value = request.POST['value']
+        result.save()
+        results = SampleResult.objects.filter(Sample=result.Sample)
+        return render(request,'Samples/results.html',{'results':results,'Error':'yy'})
+    else:
+        return render(request,'Samples/results.html',{'results':results,'Error':'yy'})
 
 
    

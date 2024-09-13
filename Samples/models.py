@@ -1,5 +1,5 @@
 from django.db import models
-from StaticData.models import SampleType,Material,Status,Test,UOM
+from StaticData.models import SampleType,Material,Status,Test,UOM,Event
 
 class Sample(models.Model):
     Identifier =models.CharField(max_length=100,null=True, blank=True)
@@ -8,6 +8,7 @@ class Sample(models.Model):
     Priority = models.BooleanField(default=False)
     Material = models.ForeignKey(Material,on_delete=models.CASCADE,null=True, blank=True)
     Status = models.ForeignKey(Status,on_delete=models.CASCADE)
+    Event = models.ForeignKey(Event,on_delete=models.CASCADE)
     CreatedDt = models.DateTimeField(auto_now_add=True)
     UserText1 =models.CharField(max_length=100,null=True, blank=True)
 
@@ -22,9 +23,8 @@ class SampleResult(models.Model):
     Test = models.ForeignKey(Test,on_delete=models.CASCADE)
     Value =models.CharField(max_length=100,null=True, blank=True)
     UOM=models.ForeignKey(UOM,on_delete=models.CASCADE)
-
-def __str__(self):
-        return self.Test
+   
+    
 
     
     

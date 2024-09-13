@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Sample,SampleResult
+from StaticData.models import EventTest
 from .forms import SampleForm
 from django.contrib.auth import logout,login,authenticate
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
@@ -46,9 +47,9 @@ def listsamples(request):
     samples = Sample.objects.filter().exclude(Status=5)
     return render(request,'Samples/listsamples.html',{'samples':samples})
 
-def completedsamples(request):
+def releasedsamples(request):
     samples = Sample.objects.filter(Status=5)
-    return render(request,'Samples/completedsamples.html',{'samples':samples})
+    return render(request,'Samples/releasedsamples.html',{'samples':samples})
 
 def logsample(request):
     if request.method =='GET':
@@ -62,8 +63,24 @@ def logsample(request):
                 newSample.SampleType = form.cleaned_data['SampleType']
                 newSample.Material = form.cleaned_data['Material']
                 newSample.Status = form.cleaned_data['Status']
-
+                newSample.Event = form.cleaned_data['Event']
+                
                 newSample.save()
+                EventTests = EventTest.objects.filter(Event=newSample.Event)
+
+               
+                for ET in EventTests:
+                    #print(EventTests['Test'])
+                    #print(form.cleaned_data['Event'])
+                    #print(ET.Test)
+                    newResult = SampleResult()
+                    newResult.Sample=newSample
+                    newResult.Test = ET.Test
+                    newResult.UOM=ET.UOM
+                               
+                    newResult.save()
+                
+               
                 return redirect('listsamples')
             else:
                 return redirect('home')

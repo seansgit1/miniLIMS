@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-warning">
+     <nav class="navbar navbar-expand-md navbar-light bg-warning">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
                 <img src="{% static 'todo/logo.png' %}" width="30" height="30" class="d-inline-block align-top">
@@ -27,11 +27,14 @@
                 {% if user.is_authenticated %}
                     <ul class="navbar-nav mr-auto">
                         <!--Logged in as {{ user.username }}-->
+                        <li class="nav-item {{ mysamples }}">
+                            <a href = "{% url 'listsamples' %}">&nbsp My Samples &nbsp</a>
+                        </li>
                         <li class="nav-item {{ current }}">
                             <a href = "{% url 'listsamples' %}">&nbsp Current Samples &nbsp</a>
                         </li>
                         <li class="nav-item {{ completed }}">
-                            <a href = "{% url 'completedsamples' %}">&nbsp Completed Samples &nbsp</a>
+                            <a href = "{% url 'releasedsamples' %}">&nbsp Released Samples &nbsp</a>
                         </li>
                         <li class="nav-item {{ create }}">
                             <a href = "{% url 'logsample' %}">&nbsp Log Sample &nbsp</a>    

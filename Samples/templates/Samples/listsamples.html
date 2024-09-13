@@ -18,7 +18,7 @@
             <div class="list-group">
                 {% for sample in samples %}
                     <a href="{% url 'viewsample' sample.id %}" class="list-group-item list-group-item-action{% if sample.Priority %} list-group-item-danger{% endif %}">
-                        <b>{{ sample.id }} - {{ sample.Status }} - {{ sample.Identifier }} - {{ sample.SampleDt }} </b></a>
+                    <b>{{ sample.id }} - {{ sample.Status }} - {{ sample.Identifier }} - {{ sample.SampleDt }} - {{ sample.Event }} </b></a>
                 {% endfor %}
             </div>   
         {% else %}

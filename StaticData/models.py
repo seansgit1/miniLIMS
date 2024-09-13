@@ -10,7 +10,6 @@ class UOM(models.Model):
     def __str__(self):
         return self.UOMName
 
-
 class Test(models.Model):
     TestName =models.CharField(max_length=100)
     UOMID = models.ForeignKey(UOM,on_delete=models.CASCADE)
@@ -21,6 +20,16 @@ class Test(models.Model):
 
     def __str__(self):
         return self.TestName
+    
+class Event(models.Model):
+    EventName =models.CharField(max_length=100)
+    CreatedDt = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['EventName']
+
+    def __str__(self):
+        return self.EventName
     
 class Material(models.Model):
     MaterialName =models.CharField(max_length=100)
@@ -53,5 +62,12 @@ class Status(models.Model):
 
     def __str__(self):
         return self.StatusName
+    
+class EventTest(models.Model):
+    Event =models.ForeignKey(Event,on_delete=models.CASCADE)
+    Test = models.ForeignKey(Test,on_delete=models.CASCADE)
+    UOM=models.ForeignKey(UOM,on_delete=models.CASCADE)
+  
+   
 
 
